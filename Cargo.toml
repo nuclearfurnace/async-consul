@@ -1,11 +1,17 @@
 [package]
 name = "async-consul"
-version = "0.1.0-alpha.1"
+version = "0.1.0-alpha.2"
 authors = ["Toby Lawrence <toby@nuclearfurnace.com>"]
 edition = "2018"
-readme = "README.md"
+
 license = "MIT"
+
 description = "An Tokio-based Consul client for Rust."
+homepage = "https://github.com/nuclearfurnace/async-consul"
+repository = "https://github.com/nuclearfurnace/async-consul"
+documentation = "https://docs.rs/async-consul"
+readme = "README.md"
+
 keywords = ["consul", "async", "tokio"]
 
 [dependencies]

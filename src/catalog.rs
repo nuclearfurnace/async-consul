@@ -67,7 +67,7 @@ pub struct CatalogServiceNode {
     #[serde(rename = "ServiceAddress")]
     pub service_address: String,
     #[serde(rename = "ServiceTaggedAddresses")]
-    pub service_tagged_addresses: Option<HashMap<String, String>>,
+    pub service_tagged_addresses: Option<HashMap<String, ServiceAddress>>,
     #[serde(rename = "ServiceTags")]
     pub service_tags: Vec<String>,
     #[serde(rename = "ServiceMeta")]
@@ -132,7 +132,7 @@ impl Catalog {
     /// Each item in the response stream represents all nodes running in the service after a change
     /// to the service has occurred.  The stream will terminate if any error is hit during the
     /// background requests made to Consul.
-    pub async fn watch_service_nodes(
+    pub fn watch_service_nodes(
         &self,
         service: &str,
         options: Option<QueryOptions>,
@@ -148,7 +148,7 @@ impl Catalog {
                 // Override the blocking settings before every request.
                 let options = options.as_mut().map(|opts| { opts.blocking = blocking.take(); &*opts });
 
-                let request = http_client.build_request("get", &["v1", "catalog", "service", &service], options, ())?;
+                let request = http_client.build_request("GET", &["v1", "catalog", "service", &service], options, ())?;
                 let response = http_client.run_request(request, options).await?;
                 let (parsed, meta) = http_client.parse_query_response(response).await?;
 

@@ -26,7 +26,7 @@ pub struct Client {
 
 impl Client {
     /// Create a new [`Client`].
-    pub async fn new(base_uri: &str) -> Result<Client, Error> {
+    pub fn new(base_uri: &str) -> Result<Client, Error> {
         let base_uri = Url::parse(base_uri)?;
         let http_client = HttpClient::new(base_uri);
 

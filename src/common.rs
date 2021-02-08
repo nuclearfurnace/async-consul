@@ -247,6 +247,8 @@ pub struct QueryOptions {
     pub near: Option<String>,
     /// Filter results to nodes that match the specified node metadata values.
     pub node_meta: Option<HashMap<String, String>>,
+    /// Filter results to nodes that have a tag matching the specified tag.
+    pub tag: Option<String>,
     /// Filtering reduces network load by filtering results on the server prior to responding.
     ///
     /// Users can refer to the Consul API documentation,
@@ -309,6 +311,10 @@ impl CollectQueryParameters for QueryOptions {
             for (k, v) in nodemeta.iter() {
                 pairs.push(("node-meta[]", format!("{}:{}", k, v).into()))
             }
+        }
+
+        if let Some(tag) = self.tag.as_ref() {
+            pairs.push(("tag", tag.clone().into()));
         }
 
         if let Some(filtering) = self.filtering.as_ref() {
